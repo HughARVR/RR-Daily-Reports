@@ -54,13 +54,12 @@ df['Herd'] = df['Herd_Number'].map(herd_status)
 
 df['RR_Name'] = df['Herd'] + ((df['SystemID'] - 1) % 10 + 1).astype(str)
 
-def create_graphs_and_report(df, output_dir='output'):
+def create_graphs_and_report(df):
     """
     Generate graphs for each SystemID and create HTML report
     """
     # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-    os.makedirs(f'{output_dir}/graphs', exist_ok=True)
+    os.makedirs('graphs', exist_ok=True)
     
     # Get unique system IDs
     system_ids = df['SystemID'].unique()
@@ -91,7 +90,7 @@ def create_graphs_and_report(df, output_dir='output'):
         
         # Save graph
         graph_filename = f'system_{system_id}_temperature.png'
-        graph_path = f'{output_dir}/graphs/{graph_filename}'
+        graph_path = f'graphs/{graph_filename}'
         plt.savefig(graph_path, dpi=300, bbox_inches='tight')
         plt.close()
         
@@ -125,11 +124,11 @@ def create_graphs_and_report(df, output_dir='output'):
     )
     
     # Save HTML report
-    with open(f'{output_dir}/temperature_report.html', 'w') as f:
+    with open('index.html', 'w') as f:
         f.write(html_content)
     
-    print(f"Report generated: {output_dir}/temperature_report.html")
-    print(f"Graphs saved in: {output_dir}/graphs/")
+    print("Report generated: /temperature_report.html")
+    print("Graphs saved in: /graphs/")
 
 # Usage example:
 # Assuming you have your DataFrame 'df' with columns: timestamp, systemID, temperature
